@@ -27,16 +27,16 @@ public class UserEntity {
     @Column(length = 50, nullable = false)
     private String apellido;
 
-    @Column(length = 50, name = "numero_documento", nullable = false)
+    @Column(length = 50, name = "numero_documento", nullable = false, unique = true)
     private String numeroDocumento;
 
-    @Column(length = 13, nullable = false)
+    @Column(length = 13, nullable = false, unique = true)
     private String celular;
 
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(length = 255, nullable = false)
+    @Column(length = 255, nullable = false, unique = true)
     private String correo;
 
     @Column(nullable = false)
