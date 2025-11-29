@@ -20,5 +20,5 @@ public class UserModel {
     private LocalDate fechaNacimiento;
     private String correo;
     private String clave;
-    private String rol;
+    private RolModel rol;
 }
