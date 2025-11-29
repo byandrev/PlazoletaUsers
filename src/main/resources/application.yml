@@ -12,5 +12,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  sql:
+    init:
+      mode: always
+
 appDescription: "Plazoleta Users"
 appVersion: "1.0.0"
