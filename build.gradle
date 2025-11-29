@@ -39,8 +39,7 @@ dependencies {
     //	runtimeOnly "mysql:mysql-connector-java:${mySqlConnectorVersion}"
     runtimeOnly "org.postgresql:postgresql:${postgresSqlVersion}"
 
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+    implementation "org.springframework.boot:spring-boot-starter-security"
 
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
