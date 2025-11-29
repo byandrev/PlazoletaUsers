@@ -9,6 +9,8 @@ import com.pragma.powerup.domain.spi.IRolPersistencePort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,8 +20,16 @@ public class UserUseCase implements IUserServicePort {
     private final IRolPersistencePort rolPersistencePort;
     private final IPasswordEncoderPort passwordEncoderPort;
 
+    private boolean isOfLegalAge(LocalDate dateOfBirth) {
+        return Period.between(dateOfBirth, LocalDate.now()).getYears() >= 18;
+    }
+
     @Override
     public void saveUser(UserModel user) {
+        if (!isOfLegalAge(user.getFechaNacimiento())) {
+            throw new IllegalArgumentException("El usuario debe ser mayor de edad");
+        }
+
         RolModel propietarioRole = rolPersistencePort.getByName(RolType.PROPIETARIO);
         String hashedPassword = passwordEncoderPort.encode(user.getClave());
 
