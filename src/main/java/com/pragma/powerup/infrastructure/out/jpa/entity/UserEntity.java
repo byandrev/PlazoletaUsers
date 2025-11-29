@@ -42,5 +42,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String clave;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_rol", nullable = false)
+    private RolEntity rol;
 }
