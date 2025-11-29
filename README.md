@@ -18,7 +18,7 @@ To get a local copy up and running follow these steps.
 
 * JDK 11 [https://jdk.java.net/java-se-ri/11](https://jdk.java.net/java-se-ri/11)
 * Gradle [https://gradle.org/install/](https://gradle.org/install/)
-* PostgreSQL [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/)
+* PostgreSQL
 
 ### Recommended Tools
 * IntelliJ Community [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/)
@@ -29,18 +29,9 @@ To get a local copy up and running follow these steps.
 1. Clone the repo
 2. Change directory
    ```sh
-   cd power-up-arquetipo
+   cd plazoleta-users
    ```
-3. Create a new database in MySQL called powerup
-4. Update the database connection settings 
-   ```yml
-   # src/main/resources/application.yml   
-   spring:
-      datasource:
-          url: jdbc:mysql://localhost/powerup
-          username: root
-          password: 1234
-   ```
+3. Run docker compose
 
 <!-- USAGE -->
 ## Usage
