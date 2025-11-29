@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.dto.response;
 
+import com.pragma.powerup.domain.model.RolModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,6 @@ public class UserResponseDto {
     private String celular;
     private LocalDate fechaNacimiento;
     private String correo;
-    private String rol;
+    private RolModel rol;
 
 }
