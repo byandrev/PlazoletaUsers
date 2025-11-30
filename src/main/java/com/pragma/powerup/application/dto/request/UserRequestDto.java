@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
@@ -32,7 +33,7 @@ public class UserRequestDto {
     )
     private String celular;
 
-    @NotBlank(message = "La fecha de nacimiento no puede estar vacia")
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;
 
     @NotBlank(message = "El correo no puede estar vacio")
