@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ControllerAdvisor {
 
-    private static final String MESSAGE = "message";
-
     @ExceptionHandler(NoDataFoundException.class)
     public ResponseEntity<CustomResponse<Void>> handleNoDataFoundException(
             NoDataFoundException ignoredNoDataFoundException) {
@@ -55,7 +53,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<CustomResponse<Void>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    public ResponseEntity<CustomResponse<Void>> handleDataIntegrityViolationException() {
         CustomResponse<Void> response = CustomResponse.<Void>builder()
                 .status(HttpStatus.CONFLICT.value())
                 .error("Conflict")
