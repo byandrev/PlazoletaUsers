@@ -3,10 +3,9 @@ package com.pragma.powerup.infrastructure.input.rest;
 import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.application.handler.IUserHandler;
+import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -37,26 +36,32 @@ public class UserRestController {
 
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All users returned",
-                    content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class)))),
+            @ApiResponse(responseCode = "200", description = "All users returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-    public ResponseEntity<List<UserResponseDto>> getAll() {
-        return ResponseEntity.ok(userHandler.getAllUsers());
+    public ResponseEntity<CustomResponse<List<UserResponseDto>>> getAll() {
+        CustomResponse<List<UserResponseDto>> response = CustomResponse.<List<UserResponseDto>>builder()
+                .status(HttpStatus.OK.value())
+                .data(userHandler.getAllUsers())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User returned",
-                    content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class)))),
+            @ApiResponse(responseCode = "200", description = "User returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(userHandler.getUserById(id));
+    public ResponseEntity<CustomResponse<UserResponseDto>> getById(@PathVariable Long id) {
+        CustomResponse<UserResponseDto> response = CustomResponse.<UserResponseDto>builder()
+                .status(HttpStatus.OK.value())
+                .data(userHandler.getUserById(id))
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
 }
