@@ -1,5 +1,6 @@
 package com.pragma.powerup.domain.usecase;
 
+import com.pragma.powerup.domain.exception.UserNotAdultException;
 import com.pragma.powerup.domain.model.RolModel;
 import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.model.UserModel;
@@ -40,7 +41,7 @@ class UserUseCaseTest {
         UserModel userModel = new UserModel();
         userModel.setFechaNacimiento(LocalDate.now().minusYears(17));
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        UserNotAdultException exception = assertThrows(UserNotAdultException.class, () -> {
             userUseCase.saveUser(userModel);
         });
 
