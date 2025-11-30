@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
+import com.pragma.powerup.domain.exception.UserNotAdultException;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,10 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.DUPLICATE_DATA.getMessage()));
     }
-    
+
+    @ExceptionHandler(UserNotAdultException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFoundException(UserNotAdultException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ex.getMessage()));
+    }
 }

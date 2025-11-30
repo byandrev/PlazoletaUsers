@@ -1,6 +1,7 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.exception.UserNotAdultException;
 import com.pragma.powerup.domain.model.RolModel;
 import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.model.UserModel;
@@ -27,7 +28,7 @@ public class UserUseCase implements IUserServicePort {
     @Override
     public void saveUser(UserModel user) {
         if (!isOfLegalAge(user.getFechaNacimiento())) {
-            throw new IllegalArgumentException("El usuario debe ser mayor de edad");
+            throw new UserNotAdultException();
         }
 
         RolModel propietarioRole = rolPersistencePort.getByName(RolType.PROPIETARIO);
