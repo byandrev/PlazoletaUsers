@@ -47,4 +47,16 @@ public class UserRestController {
         return ResponseEntity.ok(userHandler.getAllUsers());
     }
 
+    @Operation(summary = "Get user by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User returned",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(userHandler.getUserById(id));
+    }
+
 }
