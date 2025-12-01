@@ -78,11 +78,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(AccessDeniedException.class)
     public  ResponseEntity<CustomResponse<Void>> handleAccessDeniedException(AccessDeniedException ex) {
         CustomResponse<Void> response = CustomResponse.<Void>builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .error("Access is denied")
+                .status(HttpStatus.FORBIDDEN.value())
+                .error("Forbidden")
                 .message(ex.getMessage())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 }
