@@ -8,9 +8,11 @@ import com.pragma.powerup.infrastructure.out.jpa.mapper.IUserEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
 
@@ -41,6 +43,15 @@ public class UserJpaAdapter implements IUserPersistencePort {
         
         if (userEntity.isEmpty()) throw new NoDataFoundException();
         
+        return userEntityMapper.toUserModel(userEntity.get());
+    }
+
+    @Override
+    public UserModel getByCorreo(String correo) {
+        Optional<UserEntity> userEntity = userRepository.findByCorreo(correo);
+
+        if (userEntity.isEmpty()) throw new NoDataFoundException();
+
         return userEntityMapper.toUserModel(userEntity.get());
     }
 }

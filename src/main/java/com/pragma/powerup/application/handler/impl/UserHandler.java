@@ -10,12 +10,10 @@ import com.pragma.powerup.domain.model.UserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserHandler implements IUserHandler {
 
     private final IUserServicePort userServicePort;
