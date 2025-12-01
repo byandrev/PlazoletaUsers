@@ -7,6 +7,7 @@ import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -72,5 +73,16 @@ public class ControllerAdvisor {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public  ResponseEntity<CustomResponse<Void>> handleAccessDeniedException(AccessDeniedException ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error("Access is denied")
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 }
