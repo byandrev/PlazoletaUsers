@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "201", description = "User created", content = @Content),
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
     })
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @PostMapping("/")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         userHandler.saveUser(userRequestDto);
@@ -39,6 +41,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "200", description = "All users returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<UserResponseDto>>> getAll() {
         CustomResponse<List<UserResponseDto>> response = CustomResponse.<List<UserResponseDto>>builder()
@@ -54,6 +57,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "200", description = "User returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<UserResponseDto>> getById(@PathVariable Long id) {
         CustomResponse<UserResponseDto> response = CustomResponse.<UserResponseDto>builder()
