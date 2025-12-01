@@ -27,6 +27,7 @@ ext {
 	mySqlConnectorVersion = "8.0.32"
 	openApiVersion = "1.6.11"
     postgresSqlVersion = "42.7.8"
+    jwtVersion = "4.5.0"
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
     runtimeOnly "org.postgresql:postgresql:${postgresSqlVersion}"
 
     implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "com.auth0:java-jwt:${jwtVersion}"
 
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
