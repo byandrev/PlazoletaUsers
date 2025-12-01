@@ -1,5 +1,7 @@
 package com.pragma.powerup.infrastructure.configuration;
 
+import com.pragma.powerup.infrastructure.exception.CustomAccessDeniedHandler;
+import com.pragma.powerup.infrastructure.exception.CustomAuthenticationEntryPoint;
 import com.pragma.powerup.infrastructure.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,10 @@ public class SpringSecurity {
 
     private final JwtFilter jwtFilter;
 
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -33,6 +39,10 @@ public class SpringSecurity {
                     auth.antMatchers("/api/v1/**").authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandler -> {
+                    exceptionHandler.accessDeniedHandler(customAccessDeniedHandler);
+                    exceptionHandler.authenticationEntryPoint(customAuthenticationEntryPoint);
+                })
                 .build();
     }
 
