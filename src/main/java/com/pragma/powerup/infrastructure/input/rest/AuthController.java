@@ -1,9 +1,9 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
-import com.pragma.powerup.application.dto.request.UserLoginDto;
-import com.pragma.powerup.application.dto.response.UserLoggedDto;
+import com.pragma.powerup.application.dto.request.LoginRequestDto;
+import com.pragma.powerup.application.dto.response.JwtResponseDto;
+import com.pragma.powerup.application.handler.IAuthHandler;
 import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
-import com.pragma.powerup.infrastructure.security.jwt.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +26,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;
+    private final IAuthHandler  authHandler;
 
     @Operation(summary = "Login user")
     @ApiResponses(value = {
@@ -40,14 +37,12 @@ public class AuthController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @PostMapping("/login")
-    public ResponseEntity<CustomResponse<UserLoggedDto>> login(@Valid @RequestBody UserLoginDto userLoginDto) {
-        UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(userLoginDto.getCorreo(), userLoginDto.getClave());
-        authenticationManager.authenticate(login);
-        String jwt = jwtUtils.generateToken(userLoginDto.getCorreo());
+    public ResponseEntity<CustomResponse<JwtResponseDto>> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        JwtResponseDto jwt = authHandler.login(loginRequestDto);
 
-        CustomResponse<UserLoggedDto> response = CustomResponse.<UserLoggedDto>builder()
+        CustomResponse<JwtResponseDto> response = CustomResponse.<JwtResponseDto>builder()
                 .status(HttpStatus.OK.value())
-                .data(UserLoggedDto.builder().jwt(jwt).build())
+                .data(JwtResponseDto.builder().jwt(jwt.getJwt()).build())
                 .build();
 
         return ResponseEntity
