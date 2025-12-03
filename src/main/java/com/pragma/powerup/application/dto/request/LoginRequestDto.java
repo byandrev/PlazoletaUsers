@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class UserLoginDto {
+public class LoginRequestDto {
 
     @NotBlank(message = "El correo no puede estar vacio")
     @Email(message = "Correo inválido")
