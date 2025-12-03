@@ -18,10 +18,11 @@ public class JwtUtils {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String userName) {
+    public String generateToken(String userName, String rol) {
         return JWT.create()
                 .withSubject(userName)
                 .withIssuer("plazoleta")
+                .withClaim("rol", rol)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(expiration)))
                 .sign(Algorithm.HMAC256(secret));
