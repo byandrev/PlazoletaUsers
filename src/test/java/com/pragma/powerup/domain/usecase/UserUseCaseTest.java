@@ -51,12 +51,13 @@ class UserUseCaseTest {
 
     @Test
     void saveUser_WhenUserIsAdult_ShouldSaveUser() {
+        RolModel rolModel = new RolModel();
+        rolModel.setNombre(RolType.PROPIETARIO);
+
         UserModel userModel = new UserModel();
         userModel.setFechaNacimiento(LocalDate.now().minusYears(18));
         userModel.setClave("password");
-
-        RolModel rolModel = new RolModel();
-        rolModel.setNombre(RolType.PROPIETARIO);
+        userModel.setRol(rolModel);
 
         when(rolPersistencePort.getByName(RolType.PROPIETARIO)).thenReturn(rolModel);
         when(passwordEncoderPort.encode("password")).thenReturn("encodedPassword");
@@ -86,6 +87,19 @@ class UserUseCaseTest {
         verify(userPersistencePort).saveUser(userModel);
         assertEquals("encodedPassword", userModel.getClave());
         assertEquals(rolModel, userModel.getRol());
+    }
+
+    @Test
+    void saveEmployeeWithoutRole() {
+        UserModel userModel = new UserModel();
+        userModel.setFechaNacimiento(LocalDate.now().minusYears(18));
+        userModel.setClave("password");
+
+        assertThrows(NullPointerException.class, () -> {
+            userUseCase.saveUser(userModel);
+        });
+
+        verify(userPersistencePort, never()).saveUser(any(UserModel.class));
     }
 
     @Test
