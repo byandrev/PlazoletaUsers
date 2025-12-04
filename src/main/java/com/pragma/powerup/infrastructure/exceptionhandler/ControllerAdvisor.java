@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
 import com.pragma.powerup.domain.exception.InvalidCredentialsException;
+import com.pragma.powerup.domain.exception.RolNotFound;
 import com.pragma.powerup.domain.exception.UserNotAdultException;
 import com.pragma.powerup.domain.exception.UserNotFound;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
@@ -79,6 +80,17 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(UserNotFound.class)
     public  ResponseEntity<CustomResponse<Void>> handleUserNotFoundException(UserNotFound ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(ex.getMessage())
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(RolNotFound.class)
+    public  ResponseEntity<CustomResponse<Void>> handleRolNotFoundException(RolNotFound ex) {
         CustomResponse<Void> response = CustomResponse.<Void>builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error(ex.getMessage())

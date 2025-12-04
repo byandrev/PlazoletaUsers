@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
+import com.pragma.powerup.domain.exception.RolNotFound;
 import com.pragma.powerup.domain.model.RolModel;
 import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.spi.IRolPersistencePort;
@@ -40,6 +41,10 @@ public class RolJpaAdapter implements IRolPersistencePort {
     @Override
     public RolModel getByName(RolType name) {
         RolEntity rolEntity = rolRepository.findFirstByNombre(name);
+
+        if (rolEntity == null) {
+            throw new RolNotFound();
+        }
 
         return rolEntityMapper.toRolModel(rolEntity);
     }
