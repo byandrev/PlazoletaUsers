@@ -2,6 +2,7 @@ package com.pragma.powerup.infrastructure.out.security.adapter;
 
 import com.pragma.powerup.domain.exception.InvalidCredentialsException;
 import com.pragma.powerup.domain.spi.IAuthPort;
+import com.pragma.powerup.infrastructure.security.authentication.CustomUserDetail;
 import com.pragma.powerup.infrastructure.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,9 +25,10 @@ public class AuthAdapter implements IAuthPort {
         try {
             Authentication authentication = authenticationManager.authenticate(login);
 
+            CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
             String rol = authentication.getAuthorities().iterator().next().getAuthority();
 
-            return jwtUtils.generateToken(correo, rol);
+            return jwtUtils.generateToken(user.getId(), correo, rol);
         } catch (BadCredentialsException e) {
             throw new InvalidCredentialsException();
         }

@@ -35,7 +35,7 @@ public class SpringSecurity {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .authorizeRequests(auth -> {
-                    auth.antMatchers("/api/v1/auth/*").permitAll();
+                    auth.antMatchers("/api/v1/auth/**").permitAll();
                     auth.antMatchers("/api/v1/**").authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
