@@ -9,11 +9,13 @@ import com.pragma.powerup.domain.spi.IPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.IRolPersistencePort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class UserUseCase implements IUserServicePort {
 

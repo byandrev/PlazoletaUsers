@@ -8,9 +8,11 @@ import com.pragma.powerup.infrastructure.out.jpa.entity.RolEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IRolEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRolRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 @RequiredArgsConstructor
 public class RolJpaAdapter implements IRolPersistencePort {
 

@@ -16,5 +16,9 @@ spring:
     init:
       mode: always
 
+jwt:
+  secret: 123456
+  expiration: 1
+
 appDescription: "Plazoleta Users"
 appVersion: "1.0.0"

@@ -1,12 +1,15 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
+import com.pragma.powerup.domain.exception.InvalidCredentialsException;
 import com.pragma.powerup.domain.exception.UserNotAdultException;
+import com.pragma.powerup.domain.exception.UserNotFound;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.ValidationError;
 import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +71,39 @@ public class ControllerAdvisor {
         CustomResponse<Void> response = CustomResponse.<Void>builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Bad Request")
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UserNotFound.class)
+    public  ResponseEntity<CustomResponse<Void>> handleUserNotFoundException(UserNotFound ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(ex.getMessage())
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public  ResponseEntity<CustomResponse<Void>> handleAccessDeniedException(AccessDeniedException ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(HttpStatus.FORBIDDEN.value())
+                .error("Forbidden")
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public  ResponseEntity<CustomResponse<Void>> handleInvalidCredentialsExcception(InvalidCredentialsException ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(ex.getMessage())
                 .message(ex.getMessage())
                 .build();
 

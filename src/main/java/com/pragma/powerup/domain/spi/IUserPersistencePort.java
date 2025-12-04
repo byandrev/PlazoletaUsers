@@ -12,4 +12,6 @@ public interface IUserPersistencePort {
 
     UserModel getUserById(Long id);
 
+    UserModel getByCorreo(String correo);
+
 }

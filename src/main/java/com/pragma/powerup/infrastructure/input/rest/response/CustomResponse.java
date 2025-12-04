@@ -22,8 +22,6 @@ public class CustomResponse<T> {
 
     private String message;
 
-    private String path;
-
     private List<ValidationError> errors;
 
 }
