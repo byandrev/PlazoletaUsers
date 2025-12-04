@@ -69,6 +69,26 @@ class UserUseCaseTest {
     }
 
     @Test
+    void saveEmployeeSuccess() {
+        RolModel rolModel = new RolModel();
+        rolModel.setNombre(RolType.EMPLEADO);
+
+        UserModel userModel = new UserModel();
+        userModel.setFechaNacimiento(LocalDate.now().minusYears(18));
+        userModel.setClave("password");
+        userModel.setRol(rolModel);
+
+        when(rolPersistencePort.getByName(RolType.EMPLEADO)).thenReturn(rolModel);
+        when(passwordEncoderPort.encode("password")).thenReturn("encodedPassword");
+
+        userUseCase.saveUser(userModel);
+
+        verify(userPersistencePort).saveUser(userModel);
+        assertEquals("encodedPassword", userModel.getClave());
+        assertEquals(rolModel, userModel.getRol());
+    }
+
+    @Test
     void getAllUsers() {
         UserModel user1 = new UserModel();
         user1.setId(1L);
