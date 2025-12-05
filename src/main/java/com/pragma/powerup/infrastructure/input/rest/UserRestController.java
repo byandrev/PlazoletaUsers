@@ -57,7 +57,6 @@ public class UserRestController {
             @ApiResponse(responseCode = "200", description = "User returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
-    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<UserResponseDto>> getById(@PathVariable Long id) {
         CustomResponse<UserResponseDto> response = CustomResponse.<UserResponseDto>builder()
