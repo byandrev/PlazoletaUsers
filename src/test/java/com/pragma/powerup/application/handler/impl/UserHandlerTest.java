@@ -99,7 +99,7 @@ class UserHandlerTest {
     }
 
     @Test
-    void saveRestaurantWithPhoneExceedingMaxLengthFailsValidation() {
+    void saveUserWithPhoneExceedingMaxLengthFailsValidation() {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setNombre("test");
         userRequestDto.setApellido("test");
@@ -118,7 +118,7 @@ class UserHandlerTest {
     }
 
     @Test
-    void saveRestaurantWithValidPhone() {
+    void saveUserWithValidPhone() {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setNombre("test");
         userRequestDto.setApellido("test");

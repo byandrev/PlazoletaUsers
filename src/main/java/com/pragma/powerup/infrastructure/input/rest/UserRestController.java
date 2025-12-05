@@ -57,7 +57,6 @@ public class UserRestController {
             @ApiResponse(responseCode = "200", description = "User returned"),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
-    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<UserResponseDto>> getById(@PathVariable Long id) {
         CustomResponse<UserResponseDto> response = CustomResponse.<UserResponseDto>builder()
@@ -66,6 +65,18 @@ public class UserRestController {
                 .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Add a new employee")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Employee created", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Employee already exists", content = @Content)
+    })
+    @PreAuthorize("hasRole('PROPIETARIO')")
+    @PostMapping("/employee")
+    public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UserRequestDto userRequestDto) {
+        userHandler.saveEmployee(userRequestDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

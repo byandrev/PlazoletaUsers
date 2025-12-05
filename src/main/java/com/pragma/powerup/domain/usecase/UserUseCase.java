@@ -3,7 +3,6 @@ package com.pragma.powerup.domain.usecase;
 import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.exception.UserNotAdultException;
 import com.pragma.powerup.domain.model.RolModel;
-import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.model.UserModel;
 import com.pragma.powerup.domain.spi.IPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.IRolPersistencePort;
@@ -33,11 +32,11 @@ public class UserUseCase implements IUserServicePort {
             throw new UserNotAdultException();
         }
 
-        RolModel propietarioRole = rolPersistencePort.getByName(RolType.PROPIETARIO);
+        RolModel rol = rolPersistencePort.getByName(user.getRol().getNombre());
         String hashedPassword = passwordEncoderPort.encode(user.getClave());
 
         user.setClave(hashedPassword);
-        user.setRol(propietarioRole);
+        user.setRol(rol);
 
         userPersistencePort.saveUser(user);
     }

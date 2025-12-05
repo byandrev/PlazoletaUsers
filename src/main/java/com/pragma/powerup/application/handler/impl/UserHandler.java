@@ -6,6 +6,7 @@ import com.pragma.powerup.application.handler.IUserHandler;
 import com.pragma.powerup.application.mapper.IUserRequestMapper;
 import com.pragma.powerup.application.mapper.IUserResponseMapper;
 import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.model.UserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,14 @@ public class UserHandler implements IUserHandler {
 
     @Override
     public void saveUser(UserRequestDto userRequestDto) {
+        userRequestDto.setRol(String.valueOf(RolType.PROPIETARIO));
+        UserModel userModel = userRequestMapper.toUser(userRequestDto);
+        userServicePort.saveUser(userModel);
+    }
+
+    @Override
+    public void saveEmployee(UserRequestDto userRequestDto) {
+        userRequestDto.setRol(String.valueOf(RolType.EMPLEADO));
         UserModel userModel = userRequestMapper.toUser(userRequestDto);
         userServicePort.saveUser(userModel);
     }

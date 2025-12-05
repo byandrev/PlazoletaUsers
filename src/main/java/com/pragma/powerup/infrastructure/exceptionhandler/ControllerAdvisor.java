@@ -1,8 +1,6 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
-import com.pragma.powerup.domain.exception.InvalidCredentialsException;
-import com.pragma.powerup.domain.exception.UserNotAdultException;
-import com.pragma.powerup.domain.exception.UserNotFound;
+import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.ValidationError;
 import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
@@ -19,6 +17,17 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdvisor {
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<CustomResponse<Void>> handleDomainException(DomainException ex) {
+        CustomResponse<Void> response = CustomResponse.<Void>builder()
+                .status(ex.getCode())
+                .error(ex.getMessage())
+                .message(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(ex.getCode()).body(response);
+    }
 
     @ExceptionHandler(NoDataFoundException.class)
     public ResponseEntity<CustomResponse<Void>> handleNoDataFoundException(
@@ -66,28 +75,6 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
-    @ExceptionHandler(UserNotAdultException.class)
-    public ResponseEntity<CustomResponse<Void>> handleUserNotFoundException(UserNotAdultException ex) {
-        CustomResponse<Void> response = CustomResponse.<Void>builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error("Bad Request")
-                .message(ex.getMessage())
-                .build();
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
-
-    @ExceptionHandler(UserNotFound.class)
-    public  ResponseEntity<CustomResponse<Void>> handleUserNotFoundException(UserNotFound ex) {
-        CustomResponse<Void> response = CustomResponse.<Void>builder()
-                .status(HttpStatus.NOT_FOUND.value())
-                .error(ex.getMessage())
-                .message(ex.getMessage())
-                .build();
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public  ResponseEntity<CustomResponse<Void>> handleAccessDeniedException(AccessDeniedException ex) {
         CustomResponse<Void> response = CustomResponse.<Void>builder()
@@ -99,14 +86,4 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @ExceptionHandler(InvalidCredentialsException.class)
-    public  ResponseEntity<CustomResponse<Void>> handleInvalidCredentialsExcception(InvalidCredentialsException ex) {
-        CustomResponse<Void> response = CustomResponse.<Void>builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error(ex.getMessage())
-                .message(ex.getMessage())
-                .build();
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
 }
