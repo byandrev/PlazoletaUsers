@@ -27,7 +27,7 @@ public class UserUseCase implements IUserServicePort {
     }
 
     @Override
-    public void saveUser(UserModel user) {
+    public UserModel saveUser(UserModel user) {
         if (!isOfLegalAge(user.getFechaNacimiento())) {
             throw new UserNotAdultException();
         }
@@ -38,7 +38,7 @@ public class UserUseCase implements IUserServicePort {
         user.setClave(hashedPassword);
         user.setRol(rol);
 
-        userPersistencePort.saveUser(user);
+        return userPersistencePort.saveUser(user);
     }
 
     @Override
