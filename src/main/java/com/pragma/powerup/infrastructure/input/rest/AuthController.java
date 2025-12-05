@@ -1,8 +1,11 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.LoginRequestDto;
+import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.JwtResponseDto;
+import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.application.handler.IAuthHandler;
+import com.pragma.powerup.application.handler.IUserHandler;
 import com.pragma.powerup.infrastructure.input.rest.response.CustomResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -27,6 +30,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final IAuthHandler  authHandler;
+    private final IUserHandler userHandler;
 
     @Operation(summary = "Login user")
     @ApiResponses(value = {
@@ -49,6 +53,22 @@ public class AuthController {
                 .ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
                 .body(response);
+    }
+
+    @Operation(summary = "Register user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created")
+    })
+    @PostMapping("/register")
+    public ResponseEntity<CustomResponse<UserResponseDto>> register(@Valid @RequestBody UserRequestDto userRequestDto) {
+        UserResponseDto userCreated = userHandler.saveClient(userRequestDto);
+
+        CustomResponse<UserResponseDto> response = CustomResponse.<UserResponseDto>builder()
+                .status(HttpStatus.OK.value())
+                .data(userCreated)
+                .build();
+
+        return ResponseEntity.ok().body(response);
     }
 
 }
