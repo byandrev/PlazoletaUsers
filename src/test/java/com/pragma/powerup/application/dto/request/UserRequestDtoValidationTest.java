@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserRequestDtoValidationTest {
 
     private Validator validator;
-    private static final LocalDate MIN_AGE_DATE = LocalDate.now().minusYears(18);
 
     @BeforeEach
     void setUp() {
@@ -29,15 +28,16 @@ class UserRequestDtoValidationTest {
     }
 
     private UserRequestDto createValidUser() {
-        UserRequestDto dto = new UserRequestDto();
-        dto.setNombre("NombreTest");
-        dto.setApellido("ApellidoTest");
-        dto.setNumeroDocumento("1234567890");
-        dto.setCelular("+573001234567");
-        dto.setFechaNacimiento(MIN_AGE_DATE.minusYears(1));
-        dto.setClave("ContrasenaSegura123");
-        dto.setCorreo("valido@test.com");
-        return dto;
+        return UserRequestDto
+                .builder()
+                .nombre("Test")
+                .apellido("Test")
+                .numeroDocumento("123456789")
+                .celular("+5723456789")
+                .fechaNacimiento(LocalDate.of(2005, 1, 1))
+                .clave("123")
+                .correo("test@gmail.com")
+                .build();
     }
 
     private void assertViolation(UserRequestDto dto, String fieldName, String expectedMessage) {

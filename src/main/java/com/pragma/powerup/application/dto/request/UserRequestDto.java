@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
 public class UserRequestDto {
 
     @NotBlank(message = "El nombre no pueda estar vacio")
