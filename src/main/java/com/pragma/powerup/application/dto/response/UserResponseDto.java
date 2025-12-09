@@ -1,6 +1,7 @@
 package com.pragma.powerup.application.dto.response;
 
 import com.pragma.powerup.domain.model.RolModel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
 public class UserResponseDto {
 
     private Long id;
