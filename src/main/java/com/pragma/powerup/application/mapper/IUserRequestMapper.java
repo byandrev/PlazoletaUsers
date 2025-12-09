@@ -24,9 +24,7 @@ public interface IUserRequestMapper {
             return null;
         }
 
-        RolModel rolModel = new RolModel();
-        rolModel.setNombre(RolType.valueOf(rol.toUpperCase()));
-        return rolModel;
+        return RolModel.builder().nombre(RolType.valueOf(rol.toUpperCase())).build();
     }
 
 }
