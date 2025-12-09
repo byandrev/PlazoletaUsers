@@ -1,8 +1,8 @@
 package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
-import com.pragma.powerup.domain.exception.UserNotFound;
 import com.pragma.powerup.domain.model.UserModel;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
+import com.pragma.powerup.infrastructure.exception.ResourceNotFound;
 import com.pragma.powerup.infrastructure.out.jpa.entity.UserEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IUserEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IUserRepository;
@@ -35,13 +35,15 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     @Override
     public UserModel getUserById(Long id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(UserNotFound::new);
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("El usuario no fue encontrado"));
         return userEntityMapper.toUserModel(userEntity);
     }
 
     @Override
     public UserModel getByCorreo(String correo) {
-        UserEntity userEntity = userRepository.findByCorreo(correo).orElseThrow(UserNotFound::new);
+        UserEntity userEntity = userRepository.findByCorreo(correo)
+                .orElseThrow(() -> new ResourceNotFound("El usuario no fue encontrado"));
         return userEntityMapper.toUserModel(userEntity);
     }
 }

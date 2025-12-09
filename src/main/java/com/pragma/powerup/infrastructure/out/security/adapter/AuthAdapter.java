@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.out.security.adapter;
 
-import com.pragma.powerup.domain.exception.InvalidCredentialsException;
 import com.pragma.powerup.domain.spi.IAuthPort;
+import com.pragma.powerup.infrastructure.exception.InvalidCredentialsException;
 import com.pragma.powerup.infrastructure.security.authentication.CustomUserDetail;
 import com.pragma.powerup.infrastructure.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
