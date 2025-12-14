@@ -1,6 +1,9 @@
 server:
   port: ${PORT}
 
+  error:
+    include-stacktrace: never
+
 spring:
   datasource:
     url: ${DB_URL}
