@@ -31,7 +31,7 @@ public class OpenApiConfiguration {
             )
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEMA_NAME))
             .info(new Info()
-                .title("Hexagonal Power-up API")
+                .title("Trazabilidad Usuarios")
                 .version(appVersion)
                 .description(appDescription)
                 .termsOfService("http://swagger.io/terms/")
