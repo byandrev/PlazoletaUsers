@@ -24,7 +24,7 @@ public class UserRestController {
 
     private final IUserHandler userHandler;
 
-    @Operation(summary = "Add a new user")
+    @Operation(summary = "Add a new propietario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created", content = @Content),
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
