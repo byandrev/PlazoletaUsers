@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +46,7 @@ public class UserRequestDto {
     @NotBlank(message = "La clave no puede estar vacia")
     private String clave;
 
+    @Schema(hidden = true)
     private String rol;
 
 }
