@@ -9,11 +9,9 @@ import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.model.RolType;
 import com.pragma.powerup.domain.model.UserModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class UserHandler implements IUserHandler {
 

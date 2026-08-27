@@ -5,9 +5,7 @@ import com.pragma.powerup.application.dto.response.JwtResponseDto;
 import com.pragma.powerup.application.handler.IAuthHandler;
 import com.pragma.powerup.domain.spi.IAuthPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 public class AuthHandler implements IAuthHandler {
 
